@@ -1,0 +1,2 @@
+openml>=0.10.2
+jupyter>=1.0.0
