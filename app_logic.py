@@ -1,6 +1,9 @@
 import csv
 import io
+import re
+
 import pandas as pd
+import openml
 from openml.datasets.functions import create_dataset
 from openml.datasets import OpenMLDataset
 
@@ -57,3 +60,11 @@ def create_openml_dataset(df: pd.DataFrame, da: 'DataAnnotation') -> OpenMLDatas
         original_data_url=da.data_url or None,
         paper_url=da.paper_url or None
     )
+
+
+def set_openml_apikey(key):
+    """ Tests if the string is 32-length hex string, if so, set as openml api key. """
+    looks_like_key = re.fullmatch('[a-f0-9]{32}', key)
+    if looks_like_key:
+        openml.config.apikey = key
+    return looks_like_key

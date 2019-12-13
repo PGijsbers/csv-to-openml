@@ -2,7 +2,9 @@ import numpy as np
 import pandas as pd
 from ipywidgets import widgets
 
-upload_widget = widgets.FileUpload(
+# from app_logic import set_openml_apikey
+
+file_upload_widget = widgets.FileUpload(
     accept='.csv',
     multiple=False,
     description='Select a csv file'
@@ -10,11 +12,9 @@ upload_widget = widgets.FileUpload(
 
 publish_button = widgets.Button(
     description='Publish dataset',
-    disabled=True,
-    button_style='', # 'success', 'info', 'warning', 'danger' or ''
-    tooltip='Click me',
-    icon='check',
-    visible=False
+    button_style='',  # 'success', 'info', 'warning', 'danger' or ''
+    tooltip='Publish the dataset to OpenML',
+    icon='check'
 )
 
 
@@ -31,7 +31,7 @@ class DatasetAnnotation:
         self.collection_date = None
         self.creator = None
         self.contributor = None
-        self.dataset_url = None
+        self.data_url = None
         self.paper_url = None
         self.citation = None
         self.licence = None
