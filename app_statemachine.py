@@ -1,15 +1,3 @@
-# General Program Flow:
-# Display Upload Widget
-# > Upload CSV
-# Display information on meta-data in OpenML
-# Display data annotation widget
-# > Annotate data
-# Display Dublin Core annotation widget
-# > Fill in form
-# : Is API Key configured?
-# If not > add API key
-# Display Upload Widget
-# Thanks!
 from IPython.core.display import display, display_markdown, clear_output
 import ipywidgets as widgets
 import openml
@@ -79,7 +67,7 @@ class App:
 
     def load_file_upload(self):
         clear_output()
-        display_markdown("Please provide the CSV file you want to upload _to_ OpenML:", raw=True)
+        display_markdown("Please provide the CSV file you want to upload to OpenML:", raw=True)
         display(self._upload_csv)
 
     def _on_file_uploaded(self, change):
@@ -126,6 +114,7 @@ class App:
 
         def on_key_input_change(key):
             if set_openml_apikey(key):
+                print('success!')
                 self.load_publish_to_openml()
 
         key_input = widgets.interactive(on_key_input_change, key='')
@@ -136,19 +125,16 @@ class App:
         clear_output()
 
         def publish(_):
+            # The try/except block does not display markdown for whatever reason.
+            # try:
             self._oml_dataset.publish()
             display(self._oml_dataset)
             publish_button.disabled = True
             publish_button.description = 'Published!'
+            # except Exception as e:
+            #     display_markdown(f"Publish was not successful. Exception: {e}")
 
         publish_button.on_click(publish)
         display_markdown("That's it! By pressing the magical button below, your data will be uploaded to OpenML!",
                          raw=True)
         display(publish_button)
-
-
-
-
-
-
-
